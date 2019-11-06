@@ -6,7 +6,7 @@ final class ComposerTests: XCTestCase {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(Composer().text, "Hello, World!")
+//        XCTAssertEqual(Composer().text, "Hello, World!")
     }
 
     static var allTests = [
