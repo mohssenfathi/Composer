@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension String {
+public extension String {
     var isValidEmail: Bool {
         return NSPredicate(
             format:"SELF MATCHES %@",

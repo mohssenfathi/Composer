@@ -32,7 +32,7 @@ public class TableViewCell<V: UIView & ItemConfigurableView>: UITableViewCell, I
     }
     
     func setup() {
-        v.embed(in: self, safeArea: true)
+        v.embed(in: contentView, safeArea: true)
     }
     
     @discardableResult
@@ -70,7 +70,7 @@ public class CardTableViewCell<V: UIView & ItemConfigurableView>: UITableViewCel
         contentView.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.embed(in: self, insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
+        cardView.embed(in: contentView, insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
     }
     
     @discardableResult

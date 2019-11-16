@@ -53,8 +53,11 @@ open class TableViewDataSource: BaseDataSource<ViewModel>, UITableViewDataSource
         if let tableViewSection = section as? TableViewSection {
             c.backgroundColor = tableViewSection.backgroundColor
         }
-        
         return c
+    }
+    
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return (viewModel.sections[section] as? TableViewSection)?.header
     }
     
     open func cell(for item: Item, in tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {

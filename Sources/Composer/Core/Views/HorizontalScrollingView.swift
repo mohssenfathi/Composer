@@ -16,6 +16,13 @@ class HorizontalScrollingView: BaseView, ItemConfigurableView {
     private let leftArrowButton = UIButton(type: .system)
     private let rightArrowButton = UIButton(type: .system)
     private var pageSize: CGSize?
+    private let seeAllButton = UIButton(type: .system)
+    private let seeAllStack = UIStackView()
+    private var seeAllHandler: (() -> ())?
+    
+    deinit {
+        seeAllHandler = nil
+    }
     
     override func setup() {
         super.setup()
@@ -45,7 +52,27 @@ class HorizontalScrollingView: BaseView, ItemConfigurableView {
         rightArrowButton.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         rightArrowButton.addTarget(self, action: #selector(pageRight(_:)), for: .touchUpInside)
         
+        seeAllButton.setTitle("See All ›", for: .normal)
+        seeAllButton.contentHorizontalAlignment = .right
+        seeAllButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        seeAllButton.contentEdgeInsets = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 16)
+        seeAllButton.addTarget(self, action: #selector(seeAll(_:)), for: .touchUpInside)
+        if #available(iOS 13.0, *) {
+            seeAllButton.tintColor = .label
+        } else {
+            seeAllButton.tintColor = .black
+        }
+        
+        let spacer = UIView()
+        spacer.backgroundColor = .clear
+        
+        seeAllStack.isHidden = true
+        seeAllStack.addArrangedSubview(seeAllButton)
+        seeAllStack.addArrangedSubview(spacer)
+        seeAllStack.axis = .horizontal
+        
         stackView.embed(in: self)
+        stackView.addArrangedSubview(seeAllStack)
         stackView.addArrangedSubview(scrollView)
         
         addSubview(leftArrowButton)
@@ -79,6 +106,12 @@ class HorizontalScrollingView: BaseView, ItemConfigurableView {
         self.pages = pages
         self.isArrowNavigationEnabled = item.isArrowNavigationEnabled
         self.pageSize = item.pageSize
+        self.seeAllHandler = item.seeAllHandler
+        
+        if let pageLimit = item.pageLimit, pageLimit < pages.count {
+            seeAllStack.isHidden = false
+            self.pages = Array(pages[0 ..< pageLimit])
+        }
         
         if item.isArrowNavigationEnabled {
             leftArrowButton.isEnabled = true
@@ -142,6 +175,10 @@ class HorizontalScrollingView: BaseView, ItemConfigurableView {
     @objc func pageControlValueChanged(_ sender: UIPageControl) {
         let x = CGFloat(sender.currentPage) * scrollView.bounds.width
         scrollView.setContentOffset(CGPoint(x: x, y: 0), animated: true)
+    }
+    
+    @objc func seeAll(_ sender: UIButton) {
+        seeAllHandler?()
     }
     
     // MARK: - Layout
