@@ -14,34 +14,26 @@ public class ButtonView<Button: UIButton>: BaseView, ItemConfigurableView {
     deinit {
         selectionHandler = nil
     }
-    
-//    public override func layoutConstraints() {
-//        super.layoutConstraints()
-//        button?.center(in: self)
-//        button?.topAnchor.constraint(equalTo: topAnchor, constant: 12.0).isActive = true
-//        button?.addTarget(self, action: #selector(buttonSelected(_:)), for: .touchUpInside)
-//    }
-    
+        
     @discardableResult
     public func configure(with button: Button, item: ButtonItem<Button>) -> Self {
         self.button?.removeFromSuperview()
         self.button = button
-        button.center(in: self)
-        button.topAnchor.constraint(equalTo: topAnchor, constant: 12.0).isActive = true
+
+        button.embed(in: self)
         button.addTarget(self, action: #selector(buttonSelected(_:)), for: .touchUpInside)
         
         return configure(with: item)
     }
     
     public func configure(with item: ButtonItem<Button>) -> Self {
-        let b = button ?? Button()
+        let button = self.button ?? Button()
         
-        item.configurationHandler(b)
+        item.configurationHandler(button)
         selectionHandler = item.selectionHandler
         
-        b.center(in: self)
-        b.topAnchor.constraint(equalTo: topAnchor, constant: 12.0).isActive = true
-        b.addTarget(self, action: #selector(buttonSelected(_:)), for: .touchUpInside)
+        button.embed(in: self)
+        button.addTarget(self, action: #selector(buttonSelected(_:)), for: .touchUpInside)
         
         return self
     }

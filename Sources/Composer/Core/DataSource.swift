@@ -17,6 +17,7 @@ public protocol DataSource {
 
 open class BaseDataSource<VM>: NSObject, DataSource {
     public var viewModel: VM
+    private var views: Set<UIView> = []
     
     public init(viewModel: VM) {
         self.viewModel = viewModel

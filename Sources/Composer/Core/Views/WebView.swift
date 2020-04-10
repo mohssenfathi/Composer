@@ -6,7 +6,9 @@
 //
 
 import UIKit
+#if !targetEnvironment(macCatalyst)
 import WebKit
+#endif
 
 class WebView: BaseView, ItemConfigurableView {
     private let webView = WKWebView()

@@ -8,26 +8,30 @@
 import UIKit
 
 class AttributedTextView: BaseView, ItemConfigurableView {
-    private let titleLabel = UILabel()
+    private let textView = UITextView()
     private var insets: UIEdgeInsets = .zero
-    private var titleLabelConstraints: ConstraintSet?
+    private var textViewConstraints: ConstraintSet?
 
     override func layoutConstraints() {
         super.layoutConstraints()
-        titleLabelConstraints = titleLabel.embed(in: self, insets: insets)
+        textViewConstraints = textView.embed(in: self, insets: insets)
     }
     
     func configure(with item: AttributedTextItem) -> Self {
         insets = item.insets
         
-        titleLabel.numberOfLines = 0
-        titleLabel.lineBreakMode = .byWordWrapping
-        titleLabel.attributedText = item.attributedText
+        textView.backgroundColor = .clear
+        textView.isScrollEnabled = false
+        textView.isEditable = false
+        textView.textContainerInset = .zero
+        textView.textContainer.lineFragmentPadding = 0.0
+        textView.attributedText = item.attributedText
+        textView.linkTextAttributes = item.linkTextAttributes
         
-        titleLabelConstraints?.top.constant = insets.top
-        titleLabelConstraints?.left.constant = insets.left
-        titleLabelConstraints?.right.constant = -insets.right
-        titleLabelConstraints?.bottom.constant = -insets.bottom
+        textViewConstraints?.top.constant = insets.top
+        textViewConstraints?.left.constant = insets.left
+        textViewConstraints?.right.constant = -insets.right
+        textViewConstraints?.bottom.constant = -insets.bottom
         
         return self
     }

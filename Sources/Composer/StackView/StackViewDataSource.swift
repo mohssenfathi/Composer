@@ -36,5 +36,4 @@ open class StackViewDataSource: BaseDataSource<ViewModel> {
         
         return views
     }
-    
 }
