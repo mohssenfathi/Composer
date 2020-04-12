@@ -28,6 +28,7 @@ class StackView: BaseView, ItemConfigurableView {
         stackView.distribution = item.distribution
         stackView.axis = item.axis
         stackView.spacing = item.spacing
+        stackView.alignment = item.alignment
         
         stackView.removeAll()
         views.forEach { stackView.addArrangedSubview($0) }
