@@ -32,8 +32,12 @@ public class CollectionViewCell<V: UIView & ItemConfigurableView>: UICollectionV
         setup()
     }
     
+    public override func didAddSubview(_ subview: UIView) {
+        super.didAddSubview(subview)
+    }
+    
     func setup() {
-        v.embed(in: self)
+        v.embed(in: contentView)
         v.setNeedsLayout()
         v.layoutIfNeeded()
     }
@@ -73,7 +77,7 @@ public class CardCollectionViewCell<V: UIView & ItemConfigurableView>: UICollect
         contentView.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         cardView.translatesAutoresizingMaskIntoConstraints = false
-        cardView.embed(in: self, insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
+        cardView.embed(in: contentView, insets: UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16))
     }
     
     public func configure(with item: Item) -> Self {

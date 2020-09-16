@@ -40,6 +40,11 @@ public class CardContainerView: BaseView, ItemConfigurableView {
         shadowView.layer.rasterizationScale = UIScreen.main.scale
     }
     
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds).cgPath
+    }
+    
     override public func layoutConstraints() {
         super.layoutConstraints()
         
